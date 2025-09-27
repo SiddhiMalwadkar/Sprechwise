@@ -1,0 +1,41 @@
+console.log("Translator JS loaded!");
+document.addEventListener("DOMContentLoaded", () => {
+    const translateBtn = document.getElementById("translate-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const inputText = document.getElementById("input-text");
+    const translatedText = document.getElementById("translated-text");
+    const sourceLang = document.getElementById("source-language");
+
+    translateBtn.addEventListener("click", async () => {
+        const text = inputText.value.trim();
+        if (!text) return alert("Please enter text to translate.");
+
+        // Determine target language
+        const target = sourceLang.value === "en" ? "de" : "en";
+
+        try {
+            const response = await fetch("https://libretranslate.de/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    q: text,
+                    source: sourceLang.value,
+                    target: target,
+                    format: "text"
+                })
+            });
+
+            const data = await response.json();
+            translatedText.value = data.translatedText;
+
+        } catch (error) {
+            console.error("Translation error:", error);
+            alert("Failed to translate. Please try again.");
+        }
+    });
+
+    clearBtn.addEventListener("click", () => {
+        inputText.value = "";
+        translatedText.value = "";
+    });
+});

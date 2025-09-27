@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            align-items: flex-start;
+        }
+
+        /* Container for the content */
+        body > div {
+            background: #fff;
+            padding: 40px;
+            margin-top: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 700px;
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Textarea styling */
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            resize: none;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+        textarea:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+            outline: none;
+        }
+
+        /* Button styling */
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #4a90e2;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #357ABD;
+        }
+
+        /* Result box styling */
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f1f5f9;
+            border-left: 6px solid #4a90e2;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .result strong {
+            color: #4a90e2;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body > div {
+                padding: 25px;
+                margin-top: 30px;
+            }
+            button {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Sentiment Analysis</h1>
+        <form method="post">
+            <textarea name="text" rows="5" placeholder="Enter text here..."></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <strong>Text:</strong> {{ result.text }} <br>
+            <strong>Sentiment Score:</strong> {{ result.score }} <br>
+            <strong>Sentiment:</strong> {{ result.sentiment }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

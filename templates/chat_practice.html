@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprechwise - German Chat Practice</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f7fff9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      color: #32de84;
+      margin-top: 20px;
+    }
+    #chatBox {
+      width: 90%;
+      max-width: 600px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-top: 20px;
+      overflow-y: auto;
+      height: 400px;
+    }
+    .user, .bot {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user {
+      background-color: #d8fbe4;
+      align-self: flex-end;
+      text-align: right;
+    }
+    .bot {
+      background-color: #e6fff0;
+      border-left: 5px solid #32de84;
+    }
+    #userInput {
+      width: 70%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 15px;
+      outline: none;
+      font-size: 16px;
+    }
+    button {
+      background-color: #32de84;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #2bbd70;
+    }
+  </style>
+</head>
+<body>
+  <h2>💬 Practice German with AI</h2>
+  <div id="chatBox"></div>
+  <div>
+    <input id="userInput" placeholder="Schreibe etwas auf Deutsch...">
+    <button onclick="sendMessage()">Senden</button>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chatBox = document.getElementById("chatBox");
+      const message = input.value.trim();
+      if (!message) return;
+
+      // show user message
+      const userMsg = document.createElement("div");
+      userMsg.className = "user";
+      userMsg.innerText = message;
+      chatBox.appendChild(userMsg);
+      input.value = "";
+
+      // send to backend
+      const res = await fetch("/chat_practice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+
+      // show bot response
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot";
+      botMsg.innerText = data.response;
+      chatBox.appendChild(botMsg);
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>

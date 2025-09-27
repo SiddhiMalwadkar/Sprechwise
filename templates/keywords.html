@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Keyword Extraction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #f0f8ff; }
+        textarea { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; border-radius: 8px; }
+        .keyword { display: inline-block; background: #32de84; color: white; padding: 8px 12px; margin: 5px; border-radius: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Keyword Extraction</h1>
+        <form method="post">
+            <textarea name="text" rows="6" placeholder="Enter text here..."></textarea><br>
+            <button type="submit" class="btn btn-success">Extract Keywords</button>
+        </form>
+
+        {% if keywords %}
+        <h3 class="mt-4">Top Keywords:</h3>
+        <div>
+            {% for word in keywords %}
+                <span class="keyword">{{ word }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
